@@ -119,7 +119,7 @@ public class Counter {
      */
     public String toString() {
         // CHANGE THE RETURN TO A DESCRIPTION OF THE COUNTER
-        return "max: " + this.maxValue + " min: " + this.minValue + " current value: " + this.currentValue;
+        return "max: " + this.maxValue + " min: " + this.minValue + " current value: " + this.currentValue + " roll over: " + this.rolledOver;
     }
 
 }
