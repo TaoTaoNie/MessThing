@@ -9,6 +9,10 @@
 public class Counter
 {
     // PUT PRIVATE DATA FIELDS HERE
+    private int minValue;
+    private int maxValue;
+    private int currentValue;
+    private boolean rolledOver = false;
 
     /**
      * The default constructor for objects of class Counter.  Minimum is 0 and the maximum
@@ -17,6 +21,8 @@ public class Counter
     public Counter()
     {
         // ADD CODE FOR THE CONSTRUCTOR
+        currentValue = minValue = 0;
+        maxValue = Integer.MAX_VALUE;
     }
 
 
@@ -29,6 +35,12 @@ public class Counter
     public Counter(int min, int max)
     {
         // ADD CODE FOR THE ALTERNATE CONSTRUCTOR
+        if (min == max)
+            throw new CounterInitializationException("min == max");
+        if (min > max)
+            throw new CounterInitializationException("min > max");
+        currentValue = minValue = min;
+        maxValue = max;
     }
 
     /**
@@ -43,6 +55,9 @@ public class Counter
         if (otherObject instanceof Counter)
         {
             // YOUR CODE GOES HERE
+            Counter other = (Counter)otherObject;
+            if (minValue != other.minValue || maxValue != other.maxValue || currentValue != other.currentValue || rolledOver != other.rolledOver)
+                result = false;
         }
         return result;
     }
@@ -55,6 +70,14 @@ public class Counter
     public void increase()
     {
         // ADD CODE TO INCREASE THE VALUE OF THE COUNTER
+        if (currentValue == maxValue) {
+            currentValue = minValue;
+            rolledOver = true;
+        }
+        else {
+            currentValue++;
+            rolledOver = false;
+        }
     }
 
 
@@ -64,6 +87,14 @@ public class Counter
     public void decrease()
     {
         // ADD CODE TO INCREASE THE VALUE OF THE COUNTER
+        if (currentValue == minValue){
+            currentValue = maxValue;
+            rolledOver = true;
+        }
+        else {
+            currentValue--;
+            rolledOver = false;
+        }
     }
 
     /**
@@ -74,7 +105,7 @@ public class Counter
     public int value()
     {
         // CHANGE THE RETURN TO GIVE THE CURRENT VALUE OF THE COUNTER
-        return -50;
+        return currentValue;
 
     }
 
@@ -88,7 +119,7 @@ public class Counter
     public boolean rolledOver()
     {
         // CHANGE THE RETURN TO THE ROLLOVER STATUS OF THE COUNTER
-        return true;
+        return rolledOver;
     }
 
     /**
@@ -100,7 +131,7 @@ public class Counter
     public String toString()
     {
         // CHANGE THE RETURN TO A DESCRIPTION OF THE COUNTER
-        return "";
+        return "max: " + this.maxValue + " min: " + this.minValue + " current value: " + this.currentValue;
     }
 
 }
