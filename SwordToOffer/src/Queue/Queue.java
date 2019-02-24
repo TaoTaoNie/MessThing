@@ -104,6 +104,14 @@ public class Queue {
         }
     }
 
+    /**
+     * 剑指offer-P179
+     * 题目描述：
+     *          输入一个整数数组，判断该数组是不是某二叉搜素树的后序遍历结果。如果是则返回true，否则返回false。假设输入的数组的任意两个
+     *          数字都互不相同。
+     * @param sequence 输入的数组
+     * @return 返回是否是二叉树搜索树的后序遍历序列
+     */
     public boolean verifySequenceOfBST(int[] sequence) {
         if (sequence == null)
             return false;
