@@ -1,6 +1,7 @@
 package Queue;
 
 import java.util.LinkedList;
+import java.util.Stack;
 
 /**
  * @author leetHuam
@@ -62,6 +63,47 @@ public class Queue {
         }
     }
 
+    /**
+     * 剑指offer-P176
+     * 题目描述：
+     *          请实现一个函数按照之字形顺序打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右到左的顺序打印，第三行再按照
+     *          从左到右的顺序打印，其他行一次类推。
+     * @param root 该二叉树的根节点
+     */
+    public void printZ(BTNode root) {
+        if (root == null)
+            return;
+        // stack1 用来缓存奇数层节点
+        Stack<BTNode> stack1 = new Stack<BTNode>();
+        // stack2 用来缓存偶数层节点
+        Stack<BTNode> stack2 = new Stack<BTNode>();
+        int level = 1;
+        stack1.push(root);
+        while (!stack1.empty() || !stack2.empty()) {
+            if (level % 2 == 1) {
+                while (!stack1.empty()) {
+                    BTNode node = stack1.pop();
+                    System.out.print(node.value + " ");
+                    if (node.left != null)
+                        stack2.push(node.left);
+                    if (node.right != null)
+                        stack2.push(node.right);
+                }
+                level++;
+            }else {
+                while (!stack2.empty()) {
+                    BTNode node = stack2.pop();
+                    System.out.print(node.value + " ");
+                    if (node.right != null)
+                        stack1.push(node.right);
+                    if (node.left != null)
+                        stack1.push(node.left);
+                }
+                level++;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         BTNode node1 = new BTNode(8);
         BTNode node2 = new BTNode(6);
@@ -79,6 +121,7 @@ public class Queue {
         new Queue().printFromTopToBottom(node1);
         System.out.println();
         new Queue().print(node1);
+        new Queue().printZ(node1);
     }
 }
 
