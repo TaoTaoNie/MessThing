@@ -104,6 +104,36 @@ public class Queue {
         }
     }
 
+    public boolean verifySequenceOfBST(int[] sequence) {
+        if (sequence == null)
+            return false;
+        return verifySequenceOfBST1(sequence, 0, sequence.length - 1);
+    }
+
+    public boolean verifySequenceOfBST1(int[] sequence,int start, int end) {
+        if (start > end)
+            return false;
+        int root = sequence[end];
+        int i = 0;
+        for (; i < end; ++i) {
+            if (sequence[i] > root)
+                break;
+        }
+        int j = i;
+        for (; j < end; ++j) {
+            if (sequence[j] < root)
+                return false;
+        }
+        boolean left = true;
+        if (i > start)
+            left = verifySequenceOfBST1(sequence, start, i - 1);
+        boolean right = true;
+        if (i < end) {
+            right = verifySequenceOfBST1(sequence, i, end - 1);
+        }
+        return (left && right);
+    }
+
     public static void main(String[] args) {
         BTNode node1 = new BTNode(8);
         BTNode node2 = new BTNode(6);
@@ -118,10 +148,12 @@ public class Queue {
         node2.right = node5;
         node3.left = node6;
         node3.right = node7;
+        int[] sequence = {5, 7, 6, 9, 11, 10, 8};
         new Queue().printFromTopToBottom(node1);
         System.out.println();
         new Queue().print(node1);
         new Queue().printZ(node1);
+        System.out.println(new Queue().verifySequenceOfBST(sequence));
     }
 }
 
