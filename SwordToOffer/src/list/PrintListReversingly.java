@@ -1,5 +1,7 @@
 package list;
 
+import java.util.List;
+
 /**
  * 剑指offer-P58
  * @author leetHuam
@@ -210,6 +212,54 @@ public class PrintListReversingly {
         }
         return mergeHead;
     }
+
+    /**
+     * 剑指offer-P187
+     * 题目描述：
+     *          请实现一个函数复制一个复杂链表，在复杂链表中，每个节点有一个指针next指向下一个节点，还有另一个指针sibling指向
+     *          链表中的任意节点或者null
+     * @param pHead 该链表的头节点
+     */
+    public void cloneNodes(ListNode pHead) {
+        ListNode pNode = pHead;
+        while (pNode != null) {
+            ListNode pCloned = new ListNode();
+            pCloned.value = pNode.value;
+            pCloned.next = pNode.next;
+            pCloned.sibling = null;
+            pNode.next = pCloned;
+            pNode = pCloned.next;
+        }
+    }
+
+    public void connectSiblingNodes(ListNode pHead) {
+        ListNode pNode = pHead;
+        while (pNode != null) {
+            ListNode pCloned = pNode.next;
+            if (pNode.sibling != null) {
+                pCloned.sibling = pNode.sibling.next;
+            }
+            pNode = pCloned.next;
+        }
+    }
+
+    public ListNode reconnectNodes(ListNode pHead) {
+        ListNode pNode = pHead;
+        ListNode pClonedHead = null;
+        ListNode pClonedNode = null;
+        if (pNode != null) {
+            pClonedHead = pClonedNode = pNode.next;
+            pNode.next = pClonedNode.next;
+            pNode = pNode.next;
+        }
+        while (pNode != null) {
+            pClonedNode.next = pNode.next;
+            pClonedNode = pClonedNode.next;
+            pNode.next = pClonedNode.next;
+            pNode = pNode.next;
+        }
+        return pClonedHead;
+    }
     public static void main(String[] args) {
         ListNode listNode5 = new ListNode(5);
         ListNode listNode4 = new ListNode(4);
@@ -229,6 +279,8 @@ public class PrintListReversingly {
 class ListNode {
     int value;
     ListNode next = null;
+    ListNode sibling = null;
+    ListNode(){}
     ListNode(int val) {
         this.value = val;
     }
