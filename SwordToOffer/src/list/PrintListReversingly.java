@@ -216,7 +216,7 @@ public class PrintListReversingly {
     /**
      * 剑指offer-P187
      * 题目描述：
-     *          请实现一个函数复制一个复杂链表，在复杂链表中，每个节点有一个指针next指向下一个节点，还有另一个指针sibling指向
+     *          请实现一个函数复制一个复杂链表，在复杂链表中，每个节点有一个指针 next 指向下一个节点，还有另一个指针sibling指向
      *          链表中的任意节点或者null
      * @param pHead 该链表的头节点
      */
