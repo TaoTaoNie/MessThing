@@ -220,7 +220,13 @@ public class PrintListReversingly {
      *          链表中的任意节点或者null
      * @param pHead 该链表的头节点
      */
-    public void cloneNodes(ListNode pHead) {
+    public ListNode clone(ListNode pHead) {
+        cloneNodes(pHead);
+        connectSiblingNodes(pHead);
+        return reconnectNodes(pHead);
+    }
+
+    private void cloneNodes(ListNode pHead) {
         ListNode pNode = pHead;
         while (pNode != null) {
             ListNode pCloned = new ListNode();
@@ -232,7 +238,7 @@ public class PrintListReversingly {
         }
     }
 
-    public void connectSiblingNodes(ListNode pHead) {
+    private void connectSiblingNodes(ListNode pHead) {
         ListNode pNode = pHead;
         while (pNode != null) {
             ListNode pCloned = pNode.next;
@@ -243,7 +249,7 @@ public class PrintListReversingly {
         }
     }
 
-    public ListNode reconnectNodes(ListNode pHead) {
+    private ListNode reconnectNodes(ListNode pHead) {
         ListNode pNode = pHead;
         ListNode pClonedHead = null;
         ListNode pClonedNode = null;
