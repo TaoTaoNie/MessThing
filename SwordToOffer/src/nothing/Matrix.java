@@ -1,5 +1,7 @@
 package nothing;
 
+import java.util.ArrayList;
+
 /**
  * @author leetHuam
  * @version 1.0
@@ -24,36 +26,71 @@ public class Matrix {
     }
 
     private void printMatrixInCircle(int[][] numbers, int columns, int rows, int start) {
-        int endX = columns - 1 - start;
-        int endY = rows - 1 - start;
-        for (int i = start; i <= endX; i++) {
+        int endY = columns - 1 - start;
+        int endX = rows - 1 - start;
+        for (int i = start; i <= endY; i++) {
             System.out.println(numbers[start][i]);
         }
 
         if (start < endY) {
-            for (int i = start + 1; i <= endY; i++) {
-                System.out.println(numbers[i][endX]);
+            for (int i = start + 1; i <= endX; i++) {
+                System.out.println(numbers[i][endY]);
             }
         }
 
-        if (start < endX && start <endY) {
-            for (int i = endX - 1; i >= start; --i) {
-                System.out.println(numbers[endY][i]);
+        if (start < endY && start <endX) {
+            for (int i = endY - 1; i >= start; --i) {
+                System.out.println(numbers[endX][i]);
             }
         }
 
-        if (start < endX && start < endY - 1) {
-            for (int i = endY - 1; i >= start + 1; i--) {
+        if (start < endY && start < endX - 1) {
+            for (int i = endX - 1; i >= start + 1; i--) {
                 System.out.println(numbers[i][start]);
             }
         }
     }
 
     public static void main(String[] args) {
-        int[][] numbers = {{1, 2, 3, 4},
-                           {5, 6, 7, 8},
-                           {9, 10, 11, 12},
-                           {13, 14, 15, 16}};
-        new Matrix().printMatrixClockWisely(numbers, 4, 4);
+//        int[][] numbers = {{1, 2, 3, 4},
+//                           {5, 6, 7, 8},
+//                           {9, 10, 11, 12},
+//                           {13, 14, 15, 16}};
+        int[][] numbers = {{1, 2, 3}, {1, 2, 3}, {1, 2, 3}};
+        System.out.println(new Matrix().printMatrix(numbers));
+    }
+
+    public ArrayList<Integer> printMatrix(int [][] matrix) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        int rows = matrix.length;
+        int columns = matrix.length;
+        int start = 0;
+        while (rows > start * 2 && columns > start * 2) {
+            addToList(result, matrix, rows, columns, start);
+            ++start;
+        }
+        return result;
+    }
+
+    public void addToList(ArrayList<Integer> result, int[][] matrix, int rows, int columns, int start) {
+        int endY = columns - 1 - start;
+        int endX = rows - 1 - start;
+        for (int i = start; i <= endY; i++) {
+            result.add(matrix[start][i]);
+        }
+        if (endX > start) {
+            for (int i = start + 1; i <= endX; i++)
+                result.add(matrix[i][endY]);
+        }
+        if (endY > start && endX > start) {
+            for (int i = endY - 1; i >= start; i--)
+                result.add(matrix[endX][i]);
+        }
+        if (endX - 1 > start && endY > start) {
+            for (int i = endX - 1; i > start; i--) {
+                result.add(matrix[i][start]);
+            }
+        }
+
     }
 }
