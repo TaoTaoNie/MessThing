@@ -11,10 +11,11 @@ public class Test {
     Stack<Integer> min = new Stack<Integer>();
     public void push(int node) {
         data.push(node);
-        if (min.size() == 0 || node < min.peek())
+        if (min.size() == 0 || node < min.peek()) {
             min.push(node);
-        else
+        } else {
             min.push(min.peek());
+        }
     }
 
     public void pop() {
