@@ -56,16 +56,18 @@ public class Matrix {
 //                           {5, 6, 7, 8},
 //                           {9, 10, 11, 12},
 //                           {13, 14, 15, 16}};
-        int[][] numbers = {{1, 2, 3}, {1, 2, 3}, {1, 2, 3}};
+//        int[][] numbers = {{1, 2, 3}, {1, 2, 3}, {1, 2, 3}};
+        int[][] numbers = {{1},{2},{3},{4},{5}};
         System.out.println(new Matrix().printMatrix(numbers));
     }
 
     public ArrayList<Integer> printMatrix(int [][] matrix) {
         ArrayList<Integer> result = new ArrayList<Integer>();
         int rows = matrix.length;
-        int columns = matrix.length;
+        int columns = matrix[0].length;
         int start = 0;
-        while (rows > start * 2 && columns > start * 2) {
+        final int times = 2;
+        while (rows > start * times && columns > start * times) {
             addToList(result, matrix, rows, columns, start);
             ++start;
         }
@@ -79,12 +81,14 @@ public class Matrix {
             result.add(matrix[start][i]);
         }
         if (endX > start) {
-            for (int i = start + 1; i <= endX; i++)
+            for (int i = start + 1; i <= endX; i++) {
                 result.add(matrix[i][endY]);
+            }
         }
         if (endY > start && endX > start) {
-            for (int i = endY - 1; i >= start; i--)
+            for (int i = endY - 1; i >= start; i--) {
                 result.add(matrix[endX][i]);
+            }
         }
         if (endX - 1 > start && endY > start) {
             for (int i = endX - 1; i > start; i--) {

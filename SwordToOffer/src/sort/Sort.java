@@ -1,5 +1,7 @@
 package sort;
 
+import java.util.Stack;
+
 /**
  * 实现一些经典的排序算法同时含有这些经典算法的各种比较 （以空间复杂度换时间复杂度）
  *
@@ -40,8 +42,9 @@ public class Sort {
      * @param numbers 被排序的
      */
     private void bubbleSort(int[] numbers) {
-        if (numbers == null || numbers.length <= 0)
+        if (numbers == null || numbers.length <= 0) {
             return;
+        }
         for (int i = 0; i < numbers.length -1; i++){
             for (int j = 0; j < numbers.length - 1 - i; j++) {
                 if(numbers[j] > numbers[j + 1]) {
@@ -58,20 +61,22 @@ public class Sort {
      * 算法描述
      *          1.初始状态：无序区为 R[1..n], 有序区为空
      *          2.第i趟排序 (i = 1, 2, 3, 4....n-1) 开始时，当前有序区和无序区分别为 R[1..i-1] 和 R[i..n], 该
-     *            该趟排序从当前无序区中选出关键字最小的记录 R[k],将它与无序区的第 1 个记录 R 交换，使 R[1..i] 和
+     *            该趟排序从当前有序区中选出关键字最小的记录 R[k],将它与无序区的第 1 个记录 R 交换，使 R[1..i] 和
      *            R[i+1..n] 分别变为记录个数增加 1 个的有序区和记录减少 1 个的无序区；
      *          3.n-1 趟，数组有序了
      * @param numbers 进行排序的数组
      */
     private void selectSort(int[] numbers) {
-        if (numbers == null || numbers.length <= 0)
+        if (numbers == null || numbers.length <= 0) {
             return;
+        }
         int minIndex, temp;
         for (int i = 0; i < numbers.length - 1; i++) {
             minIndex = i;
             for (int j = i + 1; j < numbers.length; j++) {
-                if (numbers[j] < numbers[minIndex])
+                if (numbers[j] < numbers[minIndex]) {
                     minIndex = j;
+                }
             }
             temp = numbers[i];
             numbers[i] = numbers[minIndex];
@@ -91,8 +96,9 @@ public class Sort {
      * @param numbers 需要排序的数组
      */
     private void insertSort(int[] numbers) {
-        if (numbers == null || numbers.length <= 0)
+        if (numbers == null || numbers.length <= 0) {
             return;
+        }
         int preIndex, current;
         for (int i = 1; i < numbers.length; i++) {
             preIndex = i - 1;
@@ -115,8 +121,9 @@ public class Sort {
      * @param numbers 需要排序的数组
      */
     private void shellSort(int[] numbers) {
-        if (numbers == null || numbers.length <= 0)
+        if (numbers == null || numbers.length <= 0) {
             return;
+        }
         for (int gap = numbers.length / 2; gap > 0; gap = gap / 2) {
             for (int i = gap; i < numbers.length; i++) {
                 int j = i;
@@ -143,8 +150,9 @@ public class Sort {
      * @param right 数组的右起点
      */
     private void mergeSort(int[] numbers, int left, int right) {
-        if (numbers == null || numbers.length <= 0 || left >= right)
+        if (numbers == null || numbers.length <= 0 || left >= right) {
             return;
+        }
         int mid = (left + right) / 2;
         mergeSort(numbers, left, mid);
         mergeSort(numbers, mid + 1, right);
@@ -155,17 +163,21 @@ public class Sort {
         int[] temp = new int[numbers.length];
         int i = left, j = mid + 1, k = 0;
         while (i <= mid && j <= right) {
-            if (numbers[i] <= numbers[j])
+            if (numbers[i] <= numbers[j]) {
                 temp[k++] = numbers[i++];
-            else
+            } else {
                 temp[k++] = numbers[j++];
+            }
         }
-        while (i <= mid)
+        while (i <= mid) {
             temp[k++] = numbers[i++];
-        while (j <= right)
+        }
+        while (j <= right) {
             temp[k++] = numbers[j++];
-        for(i = 0; i < k; i++)
+        }
+        for(i = 0; i < k; i++) {
             numbers[left + i] = temp[i];
+        }
     }
 
     /**
@@ -182,13 +194,15 @@ public class Sort {
     private void quickSort(int[] numbers, int left, int right) {
         int i = left, j = right, base = numbers[left];
         while (i < j) {
-            while (numbers[j] >= base && j > i)
+            while (numbers[j] >= base && j > i) {
                 j--;
+            }
             if (j > i) {
                 numbers[i] = numbers[j];
                 i++;
-                while (numbers[i] <= base && i < j)
+                while (numbers[i] <= base && i < j) {
                     i++;
+                }
                 if (i < j) {
                     numbers[j] = numbers[i];
                     j--;
@@ -196,10 +210,68 @@ public class Sort {
             }
         }
         numbers[i] = base;
-        if (left < (i - 1))
+        if (left < (i - 1)) {
             quickSort(numbers, left, i - 1);
-        if ((j + 1) < right)
+        }
+        if ((j + 1) < right) {
             quickSort(numbers, j + 1, right);
+        }
+    }
+
+    /**
+     * 非递归版的快排
+     * @param numbers 被排的数组
+     * @param left 左边开始
+     * @param right 右边开始
+     * @return 基准趟排序之后的位置
+     */
+    private int partition(int[] numbers, int left, int right) {
+        int i = left, j = right, base = numbers[left];
+        while (i < j) {
+            while (i < j && numbers[j] > base) {
+                j--;
+            }
+            numbers[i] = numbers[j];
+            if (i < j) {
+                i++;
+                while (i < j && numbers[i] < base) {
+                    i++;
+                }
+                numbers[j] = numbers[i];
+            }
+        }
+        numbers[i] = base;
+        return i;
+    }
+    private void quickSort(int[] numbers) {
+        if (numbers == null || numbers.length == 0) {
+            return;
+        }
+        Stack<Integer> stack = new Stack<>();
+        int left = 0, right = numbers.length - 1;
+        int mid = partition(numbers, left, right);
+        if (mid - 1 > left) {
+            stack.push(left);
+            stack.push(mid - 1);
+        }
+        if (mid + 1 < right) {
+            stack.push(mid + 1);
+            stack.push(right);
+        }
+
+        while (!stack.isEmpty()) {
+            int high = stack.pop();
+            int low = stack.pop();
+            int middle = partition(numbers, low, high);
+            if (middle - 1 > low) {
+                stack.push(low);
+                stack.push(middle - 1);
+            }
+            if (middle + 1 < high) {
+                stack.push(middle + 1);
+                stack.push(high);
+            }
+        }
     }
 
     /**
@@ -212,8 +284,9 @@ public class Sort {
      * @param numbers 排序的数组
      */
     private void heapSort(int[] numbers) {
-        if (numbers == null || numbers.length <= 0)
+        if (numbers == null || numbers.length <= 0) {
             return;
+        }
         for (int i = numbers.length/2 - 1; i >= 0; i--) {
             buildBigHeap(numbers, i, numbers.length);
         }
@@ -228,8 +301,9 @@ public class Sort {
     private void buildBigHeap(int[] numbers, int current, int length) {
         int temp = numbers[current];
         for (int k = 2 * current + 1; k < length; k = 2 * k + 1) {
-            if (k + 1 < length && numbers[k] < numbers[k + 1])
+            if (k + 1 < length && numbers[k] < numbers[k + 1]) {
                 k++;
+            }
             if (numbers[k] > temp) {
                 numbers[current] = numbers[k];
                 current = k;
@@ -242,14 +316,15 @@ public class Sort {
 
     public static void main(String[] args){
         int[] numbers = {80, 30, 60, 40, 20, 10, 50, 70, 55, 45, 34, 65, 63, 23, 65, 23, 76, 23, 52};
-        new Sort().heapSort(numbers);
-        new Sort().mergeSort(numbers, 0, numbers.length - 1);
-        new Sort().bubbleSort(numbers);
-        new Sort().selectSort(numbers);
-        new Sort().shellSort(numbers);
-        new Sort().insertSort(numbers);
-        new Sort().quickSort(numbers, 0, numbers.length - 1);
-        for(int i : numbers)
+//        new Sort().heapSort(numbers);
+//        new Sort().mergeSort(numbers, 0, numbers.length - 1);
+//        new Sort().bubbleSort(numbers);
+//        new Sort().selectSort(numbers);
+//        new Sort().shellSort(numbers);
+//        new Sort().insertSort(numbers);
+        new Sort().quickSort(numbers);
+        for(int i : numbers) {
             System.out.println(i);
+        }
     }
 }

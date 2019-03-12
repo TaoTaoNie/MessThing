@@ -54,15 +54,17 @@ public class PrintListReversingly {
      * @param head 链表头节点
      */
     private static void deleteDuplication(ListNode head) {
-        if (head == null)
+        if (head == null) {
             return;
+        }
         ListNode pPreNode = null;
         ListNode pNode = head;
         while (pNode != null) {
             boolean needDelete = false;
             ListNode pNext = pNode.next;
-            if (pNext != null && pNext.value == pNode.value)
+            if (pNext != null && pNext.value == pNode.value) {
                 needDelete = true;
+            }
             if (!needDelete) {
                 pPreNode = pNode;
                 pNode = pNode.next;
@@ -73,10 +75,11 @@ public class PrintListReversingly {
                     pNext = pToBeDel.next;
                     pToBeDel = pNext;
                 }
-                if (pPreNode == null)
+                if (pPreNode == null) {
                     head = pNext;
-                else
+                } else {
                     pPreNode.next = pNext;
+                }
                 pNode = pNext;
             }
         }
@@ -94,15 +97,17 @@ public class PrintListReversingly {
      *          链表上走若干步
      */
     private ListNode findKthFromTail(ListNode listHead, int k) {
-        if (listHead == null || k <= 0)
+        if (listHead == null || k <= 0) {
             return null;
+        }
         ListNode pAhead = listHead;
         ListNode pBehind = null;
         for (int i = 0; i < k - 1; i++) {
-            if (pAhead.next != null)
+            if (pAhead.next != null) {
                 pAhead = pAhead.next;
-            else
+            } else {
                 return null;
+            }
         }
         pBehind = listHead;
         while (pAhead.next != null) {
@@ -120,12 +125,14 @@ public class PrintListReversingly {
      * @return 链表中的环的入口节点
      */
     private ListNode entryNodeOfLoop(ListNode head) {
-        if (head == null)
+        if (head == null) {
             return null;
+        }
         ListNode meetingNode = meetingNode(head);
         /*链表中没有环的情况下直接返回null*/
-        if (meetingNode == null)
+        if (meetingNode == null) {
             return null;
+        }
         int nodesInLoop = 1;
         ListNode node1 = meetingNode;
         while (node1.next != meetingNode) {
@@ -151,16 +158,19 @@ public class PrintListReversingly {
      */
     private ListNode meetingNode(ListNode head) {
         ListNode slow = head.next;
-        if (slow == null)
+        if (slow == null) {
             return null;
+        }
         ListNode fast = slow.next;
         while (fast != null && slow != null) {
-            if (slow == fast)
+            if (slow == fast) {
                 return fast;
+            }
             slow = slow.next;
             fast = fast.next;
-            if (fast != null)
+            if (fast != null) {
                 fast = fast.next;
+            }
         }
         return null;
     }
@@ -173,15 +183,17 @@ public class PrintListReversingly {
      * @return 反转之后的链表的头节点
      */
     private ListNode reverseList(ListNode head) {
-        if (head == null)
+        if (head == null) {
             return null;
+        }
         ListNode reverseHead = null;
         ListNode node = head;
         ListNode pre = null;
         while (node != null) {
             ListNode next = node.next;
-            if (next == null)
+            if (next == null) {
                 reverseHead = node;
+            }
             node.next = pre;
             pre = node;
             node = next;
@@ -198,10 +210,11 @@ public class PrintListReversingly {
      * @return 合并之后的链表头节点
      */
     private ListNode merge(ListNode head1, ListNode head2) {
-        if (head1 == null)
+        if (head1 == null) {
             return head2;
-        else if (head2 == null)
+        } else if (head2 == null) {
             return head1;
+        }
         ListNode mergeHead = null;
         if (head1.value < head2.value) {
             mergeHead = head1;

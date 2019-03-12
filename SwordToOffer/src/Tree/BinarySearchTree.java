@@ -1,7 +1,5 @@
 package Tree;
 
-import java.util.Stack;
-
 /**
  * @author leetHuam
  * @version 1.0
@@ -64,15 +62,17 @@ public class BinarySearchTree<T extends Comparable<T>> {
      * @return 搜到的节点
      */
     private BSTreeNode<T> iterativeSearch(BSTreeNode<T> x, T key) {
-        if (x == null)
+        if (x == null) {
             return x;
+        }
         int cmp = key.compareTo(x.key);
-        if (cmp < 0)
+        if (cmp < 0) {
             return iterativeSearch(x.left, key);
-        else if (cmp > 0)
+        } else if (cmp > 0) {
             return iterativeSearch(x.right, key);
-        else
+        } else {
             return x;
+        }
     }
 
     public BSTreeNode<T> iterativeSearch(T key) {
@@ -88,12 +88,13 @@ public class BinarySearchTree<T extends Comparable<T>> {
     private BSTreeNode<T> search(BSTreeNode<T> x, T key) {
         while (x != null) {
             int cmp = key.compareTo(x.key);
-            if (cmp > 0)
+            if (cmp > 0) {
                 x = x.right;
-            else if (cmp < 0)
+            } else if (cmp < 0) {
                 x = x.left;
-            else
+            } else {
                 return x;
+            }
         }
         return x;
     }
@@ -108,8 +109,9 @@ public class BinarySearchTree<T extends Comparable<T>> {
      * @return 查找到的最大的二叉树的节点
      */
     private BSTreeNode<T> maximum(BSTreeNode<T> root) {
-        if (root == null)
+        if (root == null) {
             return null;
+        }
         while (root.right != null) {
             root = root.right;
         }
@@ -127,10 +129,12 @@ public class BinarySearchTree<T extends Comparable<T>> {
      * @return 查找到的最小的节点
      */
     private BSTreeNode<T> minimum(BSTreeNode<T> root) {
-        if (root == null)
+        if (root == null) {
             return null;
-        while (root.left != null)
+        }
+        while (root.left != null) {
             root = root.left;
+        }
         return root;
     }
 
@@ -148,8 +152,9 @@ public class BinarySearchTree<T extends Comparable<T>> {
      * @return 返回找到的前驱节点
      */
     public BSTreeNode<T> predecessor(BSTreeNode<T> x) {
-        if (x.left != null)
+        if (x.left != null) {
             return maximum(x.left);
+        }
         BSTreeNode<T> y = x.parent;
         while ((y != null) && (x == y.left)) {
             x = y;
@@ -167,8 +172,9 @@ public class BinarySearchTree<T extends Comparable<T>> {
      * @return 找到的后继节点
      */
     public BSTreeNode<T> postdecessor(BSTreeNode<T> x) {
-        if (x.right != null)
+        if (x.right != null) {
             return minimum(x.right);
+        }
         BSTreeNode<T> y = x.parent;
         while ((y != null) && x == y.right) {
             x = y;
@@ -185,9 +191,9 @@ public class BinarySearchTree<T extends Comparable<T>> {
      * @param insert 被插入的节点
      */
     private void insert(BinarySearchTree<T> bst, BSTreeNode<T> insert) {
-        if (bst.root == null)
+        if (bst.root == null) {
             bst.root = insert;
-        else {
+        } else {
             BSTreeNode<T> parent = null;
             BSTreeNode<T> current = bst.root;
             while (current != null) {
@@ -197,8 +203,9 @@ public class BinarySearchTree<T extends Comparable<T>> {
                 } else if (insert.key.compareTo(current.key) < 0) {
                     parent = current;
                     current = current.left;
-                } else
+                } else {
                     return;
+                }
             }
             if (parent.key.compareTo(insert.key) > 0) {
                 parent.left = insert;
@@ -213,8 +220,9 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     public void insert(T key) {
         BSTreeNode<T> insert = new BSTreeNode<>(key, null, null, null);
-        if (insert != null)
+        if (insert != null) {
             insert(this, insert);
+        }
     }
 
     public static void main(String[] args) {
@@ -232,12 +240,4 @@ class BSTreeNode<T extends Comparable<T>> {
         this.parent = parent;
         this.key = key;
     }
-}
-
-class A {
-
-}
-
-class B extends A {
-
 }
