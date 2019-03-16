@@ -1,6 +1,6 @@
 package sort;
 
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 实现一些经典的排序算法同时含有这些经典算法的各种比较 （以空间复杂度换时间复杂度）
