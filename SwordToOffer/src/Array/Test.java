@@ -207,4 +207,33 @@ public class Test {
             return (double)minHeap.peek();
         }
     }
+
+    public boolean hasPath(char[] matrix, int rows, int cols, char[] str) {
+        boolean[] vis = new boolean[matrix.length];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (search(matrix, rows, cols, i, j, 0, str, vis)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    private boolean search(char[] matrix, int rows, int cols, int r, int c, int k, char[] str, boolean[] vis) {
+        if (r < 0 || r >= rows || c < 0 || c >= cols || matrix[r * cols + c] != str[k] || vis[r * cols + c]) {
+            return false;
+        }
+        if (k == str.length - 1) {
+            return true;
+        }
+        vis[r * cols + c] = true;
+        if (search(matrix, rows, cols, r + 1, c, k + 1, str, vis) ||
+                search(matrix, rows, cols, r, c + 1, k + 1, str, vis) ||
+                search(matrix, rows, cols, r - 1, c, k + 1, str, vis) ||
+                search(matrix, rows, cols, r, c - 1, k + 1, str, vis)) {
+            return true;
+        }
+        vis[r * cols + c] = false;
+        return false;
+    }
 }
