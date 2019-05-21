@@ -1,6 +1,6 @@
 package nothing;
 
-import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * 经典的 Top K 问题，面试官经常问(下面是最小的 k 个数的解法（使用的是大顶堆），如果是最大的 K 个数的话，使用小顶堆就好了)

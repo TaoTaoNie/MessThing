@@ -35,8 +35,9 @@ public class Shift {
      * @return 结果
      */
     private double power(double base, int exponent) throws Exception{
-        if (base == 0.0 && exponent < 0)
+        if (base == 0.0 && exponent < 0) {
             throw new Exception("错误输入！");
+        }
         double result = 1.0;
         if (exponent < 0) {
             exponent = -exponent;
@@ -46,8 +47,9 @@ public class Shift {
             result = 1.0 / result;
             return result;
         }else {
-            for (int i = 1; i <= exponent; i++)
+            for (int i = 1; i <= exponent; i++) {
                 result *= base;
+            }
             return result;
         }
     }
@@ -59,8 +61,9 @@ public class Shift {
      * @param n n 位数字
      */
     private void print1ToMaxOfNDigits(int n) {
-        if (n <= 0)
+        if (n <= 0) {
             return;
+        }
         char[] numbers = new char[n];
         Arrays.fill(numbers, '0');
         while (!increment(numbers)) {
@@ -74,13 +77,14 @@ public class Shift {
         int carry = 0;
         for (int i = size - 1; i >= 0; i--) {
             int temp = numbers[i] - '0' + carry;
-            if (i == size - 1)
+            if (i == size - 1) {
                 temp++;
+            }
             if (temp >= 10) {
                 // 最高位溢出
-                if (i == 0)
+                if (i == 0) {
                     isOverflow = true;
-                else {
+                } else {
                     temp -= 10;
                     carry = 1;
                     numbers[i] = (char)('0' + temp);
@@ -96,10 +100,12 @@ public class Shift {
     private void printNumber(char[] numbers) {
         int size = numbers.length;
         int i = 0;
-        while (i < size && numbers[i] == '0')
+        while (i < size && numbers[i] == '0') {
             i++;
-        if (i == size)
+        }
+        if (i == size) {
             return;
+        }
         char[] printNum = Arrays.copyOfRange(numbers, i, size);
         System.out.println(printNum);
     }
@@ -113,10 +119,11 @@ public class Shift {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
             String string = scanner.nextLine();
-            if (string.equals("bye"))
+            if (string.equals("bye")) {
                 break;
-            else
+            } else {
                 System.out.println(string);
+            }
         }
         System.out.println("hello world");
     }

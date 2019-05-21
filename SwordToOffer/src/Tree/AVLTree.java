@@ -88,4 +88,11 @@ class AVLTreeNode {
     AVLTreeNode right;
     int height;
     int key;
+
+    public AVLTreeNode(int key, int height, AVLTreeNode left, AVLTreeNode right) {
+        this.key = key;
+        this.height = height;
+        this.left = left;
+        this.right = right;
+    }
 }

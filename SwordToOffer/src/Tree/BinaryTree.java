@@ -14,14 +14,16 @@ public class BinaryTree {
      * @return 返回创建好的节点
      */
     public static BinaryTreeNode construct(int[] pre, int[] in) {
-        if (pre == null || in == null || pre.length <= 0 || in.length <= 0)
+        if (pre == null || in == null || pre.length <= 0 || in.length <= 0) {
             return null;
+        }
         return constructCore(pre, 0, pre.length - 1, in, 0, in.length - 1);
     }
 
     private static BinaryTreeNode constructCore(int[] pre, int startPre, int endPre, int[] in, int startIn, int endIn) {
-        if (startPre > endPre || startIn > endIn)
+        if (startPre > endPre || startIn > endIn) {
             return null;
+        }
         int rootValue = pre[startPre];
         BinaryTreeNode root = new BinaryTreeNode(rootValue);
         for (int i = startIn; i <= endIn; i++) {
@@ -40,14 +42,16 @@ public class BinaryTree {
      * @return 返回创建好的节点
      */
     public static BinaryTreeNode behindConstruct(int[] post, int[] in) {
-        if (post == null || in == null || post.length <= 0 || in.length <= 0)
+        if (post == null || in == null || post.length <= 0 || in.length <= 0) {
             return null;
+        }
         return constructCore2(post, 0, post.length - 1, in, 0, in.length - 1);
     }
 
     private static BinaryTreeNode constructCore2(int[] post, int startPost, int endPost, int[] in, int startIn, int endIn) {
-        if (startPost > endPost || startIn > endIn)
+        if (startPost > endPost || startIn > endIn) {
             return null;
+        }
         BinaryTreeNode root = new BinaryTreeNode(post[endPost]);
         for (int i = startIn; i <= endIn; i++) {
             if (post[endPost] == in[i]) {
@@ -65,13 +69,15 @@ public class BinaryTree {
      * @return 下一个节点
      */
     public static BinaryTreeNode getNext(BinaryTreeNode root) {
-        if (root == null)
+        if (root == null) {
             return null;
+        }
         BinaryTreeNode next = null;
         if(root.right != null) {
             BinaryTreeNode right = root.right;
-            while (right.left != null)
+            while (right.left != null) {
                 right = right.left;
+            }
             next = right;
         }else if (root.parent != null) {
             BinaryTreeNode current = root;
@@ -94,23 +100,29 @@ public class BinaryTree {
      * @return 如果 B 是 A 的子结构返回 true，不是则返回 false
      */
     private boolean hasSubTree(BinaryTreeNode root1, BinaryTreeNode root2) {
-        if (root1 == null ||  root2 == null)
+        if (root1 == null ||  root2 == null) {
             return false;
+        }
         boolean result = false;
-        if (root1.value == root2.value)
+        if (root1.value == root2.value) {
             result = doesTree1HasTree2(root1, root2);
-        if (!result)
+        }
+        if (!result) {
             result = hasSubTree(root1.left, root2);
-        if (!result)
+        }
+        if (!result) {
             result = hasSubTree(root1.right, root2);
+        }
         return result;
     }
 
     private boolean doesTree1HasTree2(BinaryTreeNode root1, BinaryTreeNode root2) {
-        if (root1 == null)
+        if (root1 == null) {
             return false;
-        if (root2 == null)
+        }
+        if (root2 == null) {
             return true;
+        }
         if (root1.value != root2.value)
             return false;
         return doesTree1HasTree2(root1.left, root2.left) && doesTree1HasTree2(root1.right, root2.right);
@@ -123,17 +135,21 @@ public class BinaryTree {
      * @param root 该二叉树的根节点
      */
     private void mirrorRecursively(BinaryTreeNode root) {
-        if (root == null)
+        if (root == null) {
             return;
-        if (root.left == null && root.right == null)
+        }
+        if (root.left == null && root.right == null) {
             return;
+        }
         BinaryTreeNode temp = root.left;
         root.left = root.right;
         root.right = temp;
-        if (root.left != null)
+        if (root.left != null) {
             mirrorRecursively(root.left);
-        if (root.right != null)
+        }
+        if (root.right != null) {
             mirrorRecursively(root.right);
+        }
     }
 
     /**
@@ -148,10 +164,12 @@ public class BinaryTree {
     }
 
     private boolean isSymmetrical(BinaryTreeNode root1, BinaryTreeNode root2) {
-        if (root1 == null && root2 == null)
+        if (root1 == null && root2 == null) {
             return true;
-        if (root1 == null || root2 == null)
+        }
+        if (root1 == null || root2 == null) {
             return false;
+        }
         if (root1.value != root2.value)
             return false;
         return isSymmetrical(root1.left, root2.right) && isSymmetrical(root1.right, root2.left);

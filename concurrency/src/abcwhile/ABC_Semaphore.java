@@ -16,14 +16,15 @@ public class ABC_Semaphore {
     static class ThreadA extends Thread {
         @Override
         public void run() {
-            try {
-                for (int i = 0; i < 10; i++) {
-                    A.acquire();// A获取信号执行
-                    System.out.print("A");
-                    B.release();// B释放信号，B信号量为1，可以执行
+            for (int i = 0; i < 10;) {
+                try {
+                    A.acquire();
+                    System.out.println("A");
+                    i++;
+                    B.release();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -31,14 +32,15 @@ public class ABC_Semaphore {
     static class ThreadB extends Thread {
         @Override
         public void run() {
-            try {
-                for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10;) {
+                try {
                     B.acquire();
-                    System.out.print("B");
+                    System.out.println("B");
+                    i++;
                     C.release();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -46,14 +48,15 @@ public class ABC_Semaphore {
     static class ThreadC extends Thread {
         @Override
         public void run() {
-            try {
-                for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10;) {
+                try {
                     C.acquire();
                     System.out.println("C");
+                    i++;
                     A.release();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
     }
